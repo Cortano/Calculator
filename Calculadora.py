@@ -46,12 +46,14 @@ def codigoBoton(num):
 
 def suma(num):
 	global operacion, resultado,opc
+
 	if (opc == 0):
 		resultado = float(num)
 	elif (opc == 1):
 		resultado += float(num)
 	else:
 		elResultado()
+
 
 	operacion = "+"
 	opc = 1
@@ -90,7 +92,10 @@ def divide(num):
 	if (resultado == 0 and opc == 0):
 		resultado = float(num)
 	elif(opc == 4):
-		resultado /= float(num)
+		try:
+			resultado /= float(num)
+		except ZeroDivisionError:
+			return "Math Error"
 	else:
 		elResultado()
 
@@ -98,6 +103,11 @@ def divide(num):
 	opc = 4
 	operacionActual.set(operacion)
 	mostrando.set(resultado)
+
+def punto():
+	buscar= mostrando.get()
+	if (buscar.find(".") == -1):
+		mostrando.set(mostrando.get() + ".")
 
 def elResultado():
 	global operacion, resultado, opc
@@ -114,6 +124,8 @@ def elResultado():
 	elif (opc == 4):
 		resultado = dividir(resultado,mostrando.get())
 		mostrando.set(resultado)
+	resultado=0
+	
 
 
 
@@ -152,7 +164,7 @@ botonSum.grid(row=3, column=4)
 
 #--------------FILA 4-------------------
 
-botonCom=Button(frame, text=".",width=5,height=3, command=lambda:codigoBoton("."))
+botonCom=Button(frame, text=".",width=5,height=3, command=punto)
 botonCom.grid(row=4, column=1)
 boton0=Button(frame, text="0",width=5,height=3, command=lambda:codigoBoton("0"))
 boton0.grid(row=4, column=2)
